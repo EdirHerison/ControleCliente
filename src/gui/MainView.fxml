@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="928.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+   <content>
+      <VBox prefHeight="488.0" prefWidth="742.0">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="Arquivos">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Fechar" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Cadastrar">
+                  <items>
+                    <MenuItem fx:id="menuItemCadVendedor" mnemonicParsing="false" onAction="#onMenuCadVendedoraAction" text="Vendedor(a)" />
+                        <MenuItem fx:id="menuItemCadCliente" mnemonicParsing="false" onAction="#onMenuCadClienteAction" text="Cliente" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Controle">
+                  <items>
+                    <MenuItem fx:id="menuControleVendedora" mnemonicParsing="false" onAction="#onMenuControleVendedoraAction" text="Vendedora" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
