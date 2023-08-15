@@ -1,11 +1,13 @@
 package model.entidades;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Vendedora implements Serializable {
 
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 1L;
+	
 	private Integer id;
 	private Integer codigo;
 	private String cpf;
@@ -55,5 +57,26 @@ public class Vendedora implements Serializable {
 		this.nome = nome;
 	}
 	
-}
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo, cpf, id, nome);
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vendedora other = (Vendedora) obj;
+		return Objects.equals(codigo, other.codigo) && Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id)
+				&& Objects.equals(nome, other.nome);
+	}
+
+	@Override
+	public String toString() {
+		return nome ;
+	}
+}

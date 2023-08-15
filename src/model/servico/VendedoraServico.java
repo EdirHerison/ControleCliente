@@ -1,5 +1,7 @@
 package model.servico;
 
+import java.util.List;
+
 import model.dao.FabricaDAO;
 import model.dao.VendedoraDAO;
 import model.entidades.Vendedora;
@@ -30,5 +32,9 @@ public class VendedoraServico {
 	
 	public void removeVendedora(Vendedora ved) {
 		dao.removeVendedora(ved.getId());
+	}
+	
+	public List<Vendedora> buscaTodos(){
+		return dao.buscaTudo();
 	}
 }

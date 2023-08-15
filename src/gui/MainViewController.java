@@ -14,12 +14,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.entidades.Cliente;
 import model.entidades.Vendedora;
+import model.servico.ClienteServico;
 import model.servico.VendedoraServico;
 
 public class MainViewController implements Initializable{
 
-	private static final VendedoraServico VendedoraServico = null;
+	//sugestão GPT
+	private VendedoraServico vds;
+	//
+	
 	@FXML
 	private MenuItem menuItemCadVendedor;
 	@FXML
@@ -38,13 +43,17 @@ public class MainViewController implements Initializable{
 
 	@FXML
 	public void onMenuCadClienteAction() {
-		exibeTela("", x ->{});
+		exibeTela("/gui/CadClienteView.fxml", (CadClienteViewController cadCliente) ->{
+			cadCliente.setCliente(new Cliente());
+			cadCliente.setServicos(new ClienteServico(), new VendedoraServico());
+			cadCliente.cargaComboBoxVendedora();
+		});
 	}
 	
 	@FXML
 	public void onMenuControleVendedoraAction() {
 		exibeTela("/gui/ControleVendedoraView.fxml", (ControleVendedoraViewController consultVendedora) ->{
-			consultVendedora.setVendedoraService(new VendedoraServico()); // Passa a instância para o ConsultVendedoraViewController
+			consultVendedora.setVendedoraService(new VendedoraServico()); 
 	        consultVendedora.setVendedoraEntidade(new Vendedora());
 		});
 	}
