@@ -27,7 +27,10 @@ public class VendedoraJDBC implements VendedoraDAO {
 		ResultSet rs = null;
 		try {
 			ps = conexao.prepareStatement(
-					"INSERT INTO vendedora " + "(codVendedora, cpf, nome)" + "VALUES " + "(?, ?, ?)",
+					"INSERT INTO vendedora " 
+			      + "(codVendedora, cpf, nome)" 
+				  + "VALUES " 
+			      + "(?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, ved.getCodigo());
 			ps.setString(2, ved.getCpf());

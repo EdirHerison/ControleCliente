@@ -31,7 +31,7 @@ import model.servico.ClienteServico;
 import model.servico.VendedoraServico;
 
 public class CadClienteViewController implements Initializable {
-	
+
 	private Cliente cli;
 	private ClienteServico cls;
 	private VendedoraServico vds;
@@ -83,9 +83,9 @@ public class CadClienteViewController implements Initializable {
 		}
 		try {
 			Cliente cliente = dadosFor();
-            cls.cadastraCliente(cliente);
-            Alertas.exibeAlerta("Sucesso!!!!!!", null, "Cadastro realizado", AlertType.INFORMATION);
-            limpaForm();
+			cls.cadastraCliente(cliente);
+			Alertas.exibeAlerta("Sucesso!!!!!!", null, "Cadastro realizado", AlertType.INFORMATION);
+			limpaForm();
 		} catch (Exception e) {
 			Alertas.exibeAlerta("Erro ao salvar no banco. ", null, "Causa: " + e.getMessage(), AlertType.ERROR);
 		}
@@ -99,10 +99,18 @@ public class CadClienteViewController implements Initializable {
 		cli.setCodigo(Util.valorInteiro(txtCod.getText()));
 		cli.setGenero(cbGenero.getValue());
 		cli.setStatus(cbStatus.getValue());
-		Instant dtNas = Instant.from(dpNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
-		cli.setNascimento(Date.from(dtNas));
-		Instant dtCad = Instant.from(dpCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
-		cli.setCadastro(Date.from(dtCad));
+		if (dpNascimento.getValue() == null) {
+			Alertas.exibeAlerta("Erro !!", null, "Data de Nascimento Vazia", null);
+		} else {
+			Instant dtNas = Instant.from(dpNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
+			cli.setNascimento(Date.from(dtNas));
+		}
+		if (dpCadastro.getValue() == null) {
+			Alertas.exibeAlerta("Erro !!", null, "Data do Cadastro Vazia", null);
+		} else {
+			Instant dtCad = Instant.from(dpCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
+			cli.setCadastro(Date.from(dtCad));
+		}
 		cli.setVendedora(cbVendedora.getValue());
 
 		return cli;
@@ -116,9 +124,9 @@ public class CadClienteViewController implements Initializable {
 		cbGenero.getSelectionModel().clearSelection();
 		cbStatus.getSelectionModel().clearSelection();
 		cbVendedora.getSelectionModel().clearSelection();
+		dpNascimento.setValue(null);
+		dpCadastro.setValue(null);
 	}
-
-	
 
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
@@ -132,16 +140,18 @@ public class CadClienteViewController implements Initializable {
 			RegulaCampos.setCampoCPF(txtCpf);
 			RegulaCampos.setLimitaCaracteres(txtCpf, 14);
 			RegulaCampos.setLimitaCaracteres(txtNome, 70);
+			Util.formatDatePicker(dpNascimento, "dd/MM/yyyy");
+			Util.formatDatePicker(dpCadastro, "dd/MM/yyyy");
 			carregarComboBoxGenero();
 			cargaComboBoxStatus();
-			
-			
+			iniciaCBVendedora();
+
 		} catch (Exception e) {
 			Alertas.exibeAlerta("Erro !!!", null, e.getMessage(), null);
 		}
-		
+
 	}
-	
+
 	public void cargaComboBoxVendedora() {
 		if (vds == null) {
 			throw new IllegalStateException("Vendedora não foi Injetada");
@@ -150,10 +160,9 @@ public class CadClienteViewController implements Initializable {
 		listVed = FXCollections.observableArrayList(list);
 		cbVendedora.setItems(listVed);
 	}
-	
+
 	private void iniciaCBVendedora() {
-		Callback<ListView<Vendedora>, ListCell<Vendedora>> factory = lv -> 
-		    new ListCell<Vendedora>() {
+		Callback<ListView<Vendedora>, ListCell<Vendedora>> factory = lv -> new ListCell<Vendedora>() {
 			@Override
 			protected void updateItem(Vendedora item, boolean empyt) {
 				super.updateItem(item, empyt);
@@ -164,15 +173,14 @@ public class CadClienteViewController implements Initializable {
 		cbVendedora.setButtonCell(factory.call(null));
 	}
 
-
 	public void cargaComboBoxStatus() {
 		listStatus = FXCollections.observableArrayList(Arrays.asList(Status.Ativo));
 		cbStatus.setItems(listStatus);
 	}
-	
+
 	private void carregarComboBoxGenero() {
-        listGen = FXCollections.observableArrayList(Arrays.asList(Genero.values()));
-        cbGenero.setItems(listGen);
-    }
+		listGen = FXCollections.observableArrayList(Arrays.asList(Genero.values()));
+		cbGenero.setItems(listGen);
+	}
 
 }

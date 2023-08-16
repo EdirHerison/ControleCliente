@@ -20,21 +20,26 @@ public class Util {
 		dp.setConverter(new StringConverter<LocalDate>() {
 			
 			DateTimeFormatter dataFormata = DateTimeFormatter.ofPattern(forma);
+			{
+				dp.setPromptText(forma.toLowerCase());
+			}
 			
 			@Override
 			public String toString(LocalDate dt) {
 				if(dt != null) {
 					return dataFormata.format(dt);
-				}
-				return "";
+				}else {
+					return "";
+				}				
 			}
 			
 			@Override
 			public LocalDate fromString(String data) {
 				if (data != null && !data.isEmpty()) {
 					return LocalDate.parse(data, dataFormata);
+				}else {
+					return null;
 				}
-				return null;
 			}
 		});
 	}
