@@ -97,20 +97,92 @@ public class ClienteJDBC implements ClienteDAO {
 
 	@Override
 	public Cliente buscaClienteCPF(String cpf) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conexao.prepareStatement("SELECT c.idcliente, c.cpf, c.codTotvs, c.codCliente, c.nome, c.genero, "
+					+ "c.aniversario, c.dtCadastro, c.stcli, v.nome AS nome_vendedora "
+					+ "FROM cliente AS c "
+					+ "INNER JOIN vendedora AS v ON c.id_vendedora = v.idvendedora "
+					+ "WHERE c.cpf = ? ");
+			
+			ps.setString(1, cpf);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Vendedora ved = dadosVendedoraDB(rs);
+				Cliente cli = dadosClienteDB(rs, ved);
+				return cli;
+			}
+			return null;
+
+		} catch (Exception e) {
+			throw new DbExecessao(e.getMessage());
+		}
+		finally {
+			DbConexao.closeStatent(ps);
+			DbConexao.closeResultSet(rs);
+		}
 	}
 
 	@Override
 	public Cliente buscaClinteCodTotvs(String codTtv) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conexao.prepareStatement("SELECT c.idcliente, c.cpf, c.codTotvs, c.codCliente, c.nome, c.genero, "
+					+ "c.aniversario, c.dtCadastro, c.stcli, v.nome AS nome_vendedora "
+					+ "FROM cliente AS c "
+					+ "INNER JOIN vendedora AS v ON c.id_vendedora = v.idvendedora "
+					+ "WHERE c.codTotvs = ? ");
+			
+			ps.setString(1, codTtv);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Vendedora ved = dadosVendedoraDB(rs);
+				Cliente cli = dadosClienteDB(rs, ved);
+				return cli;
+			}
+			return null;
+
+		} catch (Exception e) {
+			throw new DbExecessao(e.getMessage());
+		}
+		finally {
+			DbConexao.closeStatent(ps);
+			DbConexao.closeResultSet(rs);
+		}
 	}
 
 	@Override
 	public Cliente buscaClienteCodigo(Integer cod) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conexao.prepareStatement("SELECT c.idcliente, c.cpf, c.codTotvs, c.codCliente, c.nome, c.genero, "
+					+ "c.aniversario, c.dtCadastro, c.stcli, v.nome AS nome_vendedora "
+					+ "FROM cliente AS c "
+					+ "INNER JOIN vendedora AS v ON c.id_vendedora = v.idvendedora "
+					+ "WHERE c.codCliente = ? ");
+			
+			ps.setInt(1, cod);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				Vendedora ved = dadosVendedoraDB(rs);
+				Cliente cli = dadosClienteDB(rs, ved);
+				return cli;
+			}
+			return null;
+
+		} catch (Exception e) {
+			throw new DbExecessao(e.getMessage());
+		}
+		finally {
+			DbConexao.closeStatent(ps);
+			DbConexao.closeResultSet(rs);
+		}
 	}
 	
 	@Override
