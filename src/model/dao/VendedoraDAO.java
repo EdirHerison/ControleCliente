@@ -19,5 +19,7 @@ public interface VendedoraDAO {
 	void removeVendedora (Integer id);
 
 	List<Vendedora> buscaTudo();
+	
+	List<Vendedora> buscaNome();
 
 }

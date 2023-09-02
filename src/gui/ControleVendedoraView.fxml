@@ -15,9 +15,9 @@
    <children>
       <Pane prefHeight="343.0" prefWidth="712.0">
          <children>
-            <Label layoutX="248.0" layoutY="8.0" prefHeight="40.0" prefWidth="190.0" text="opções da vendedora ">
+            <Label layoutX="227.0" layoutY="6.0" prefHeight="55.0" prefWidth="247.0" text="Opções da vendedora ">
                <font>
-                  <Font size="19.0" />
+                  <Font name="Berlin Sans FB Demi Bold" size="25.0" />
                </font>
             </Label>
             <GridPane layoutX="5.0" layoutY="52.0" prefHeight="286.0" prefWidth="702.0">
@@ -37,33 +37,51 @@
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="16.0" />
+                     </font>
                   </Label>
                   <Label text="Codigo: " GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="16.0" />
+                     </font>
                   </Label>
                   <Label text="CPF: " GridPane.rowIndex="2">
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="16.0" />
+                     </font>
                   </Label>
                   <Label text="Nome: " GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="50.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="16.0" />
+                     </font>
                   </Label>
-                  <Button fx:id="btConsultar" mnemonicParsing="false" onAction="#onBtConsultaVed" prefHeight="25.0" prefWidth="70.0" text="Consultar" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Button fx:id="btConsultar" mnemonicParsing="false" onAction="#onBtConsultaVed" prefHeight="25.0" prefWidth="93.0" text="Consultar" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
                   </Button>
                   <Button fx:id="btAtualizar" mnemonicParsing="false" onAction="#onBtAtualiza" prefHeight="25.0" prefWidth="83.0" text="Atualizar" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="150.0" />
                      </GridPane.margin>
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btExcluir" mnemonicParsing="false" onAction="#onBtExclui" prefHeight="25.0" prefWidth="71.0" text="Deletar" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Button fx:id="btExcluir" mnemonicParsing="false" onAction="#onBtExclui" prefHeight="25.0" prefWidth="81.0" text="Deletar" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="300.0" />
                      </GridPane.margin>

@@ -1,10 +1,8 @@
 package gui;
 
 import java.net.URL;
-import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -17,12 +15,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.util.Callback;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
 import model.entidades.Cliente;
 import model.entidades.Vendedora;
 import model.entities.enums.Genero;
@@ -30,18 +28,21 @@ import model.entities.enums.Status;
 import model.servico.ClienteServico;
 import model.servico.VendedoraServico;
 
-public class CadClienteViewController implements Initializable {
-
+public class ControleClienteViewController implements Initializable {
+	
 	private Cliente cli;
 	private ClienteServico cls;
 	private VendedoraServico vds;
-
+	private Vendedora ved;
+	
+	@FXML
+	private TextField txtId;
 	@FXML
 	private TextField txtNome;
 	@FXML
-	private TextField txtCpf;
+	private TextField txtCPF;
 	@FXML
-	private TextField txtCodTOVS;
+	private TextField txtCodTotvs;
 	@FXML
 	private TextField txtCod;
 	@FXML
@@ -55,90 +56,83 @@ public class CadClienteViewController implements Initializable {
 	@FXML
 	private ComboBox<Vendedora> cbVendedora;
 	@FXML
-	private Button btCadastrar;
-
+	private Button btConsultar;
+	
 	private ObservableList<Genero> listGen;
-	private ObservableList<Status> listStatus;
+	private ObservableList<Status> listSt;
 	private ObservableList<Vendedora> listVed;
-
-	public void setCliente(Cliente cli) {
+	
+	public void setCliente (Cliente cli) {
 		this.cli = cli;
 	}
-
-	public void setServicos(ClienteServico cls, VendedoraServico vds) {
+	public void setServicos (ClienteServico cls, VendedoraServico vds) {
 		this.cls = cls;
 		this.vds = vds;
 	}
-
-	@FXML
-	public void onCadastrarCliente() {
-		if (vds == null) {
-			throw new IllegalStateException("VedServ was null");
-		}
-		if (cli == null) {
-			throw new IllegalStateException("Entity was null");
-		}
-		if (cls == null) {
-			throw new IllegalStateException("Service was null");
-		}
+	
+	public void onConsultaClienteButton() {
 		try {
-			Cliente cliente = dadosFor();
-			cls.cadastraCliente(cliente);
-			Alertas.exibeAlerta("Sucesso!!!!!!", null, "Cadastro realizado", AlertType.INFORMATION);
-			limpaForm();
+			String nome = txtNome.getText();
+			String cpf = txtCPF.getText();
+			String codTtv = txtCodTotvs.getText();
+			String cod = txtCod.getText();
+			cli = null;
+			if(!nome.isEmpty()) {
+				cli = cls.consultaPorNome(nome);
+			}
+			if(!cpf.isEmpty()) {
+				cli = cls.consultaPorCPF(cpf);
+			}
+			if(!codTtv.isEmpty()) {
+				cli = cls.consultaPorCodTtv(codTtv);
+			}
+			if(!cod.isEmpty()) {
+				int codigo = Util.valorInteiro(cod);
+				cli = cls.consultaPorCod(codigo);
+			}
+			
+			if(cli != null) {
+				txtId.setText(String.valueOf(cli.getId()));
+				txtNome.setText(cli.getNome());
+				txtCPF.setText(cli.getCpf());
+				txtCodTotvs.setText(cli.getCodTotvs());
+				txtCod.setText(String.valueOf(cli.getCodigo()));
+				dpNascimento.setValue(cli.getNascimento().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				dpCadastro.setValue(cli.getCadastro().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				cbGenero.setValue(cli.getGenero());
+				cbStatus.setValue(cli.getStatus());
+				cbVendedora.setValue(cli.getVendedora());
+			}
+			else {
+				Alertas.exibeAlerta("Erro !!!", null, "Cliente não foi encontrado na base de dados", AlertType.ERROR);
+			}
 		} catch (Exception e) {
-			Alertas.exibeAlerta("Erro ao salvar no banco. ", null, "Causa: " + e.getMessage(), AlertType.ERROR);
+			 Alertas.exibeAlerta("Erro !!!", null, "Ocorreu um erro ao consultar o cliente: " + e.getMessage(), AlertType.ERROR);
 		}
 	}
-
-	public Cliente dadosFor() {
-		Cliente cli = new Cliente();
-		cli.setNome(txtNome.getText());
-		cli.setCpf(txtCpf.getText());
-		cli.setCodTotvs(txtCodTOVS.getText());
-		cli.setCodigo(Util.valorInteiro(txtCod.getText()));
-		cli.setGenero(cbGenero.getValue());
-		cli.setStatus(cbStatus.getValue());
-		if (dpNascimento.getValue() == null) {
-			Alertas.exibeAlerta("Erro !!", null, "Data de Nascimento Vazia", null);
-		} else {
-			Instant dtNas = Instant.from(dpNascimento.getValue().atStartOfDay(ZoneId.systemDefault()));
-			cli.setNascimento(Date.from(dtNas));
-		}
-		if (dpCadastro.getValue() == null) {
-			Alertas.exibeAlerta("Erro !!", null, "Data do Cadastro Vazia", null);
-		} else {
-			Instant dtCad = Instant.from(dpCadastro.getValue().atStartOfDay(ZoneId.systemDefault()));
-			cli.setCadastro(Date.from(dtCad));
-		}
-		cli.setVendedora(cbVendedora.getValue());
-
-		return cli;
-	}
-
 	private void limpaForm() {
 		txtNome.setText("");
-		txtCpf.setText("");
+		txtCPF.setText("");
 		txtCod.setText("");
-		txtCodTOVS.setText("");
+		txtCodTotvs.setText("");
 		cbGenero.getSelectionModel().clearSelection();
 		cbStatus.getSelectionModel().clearSelection();
 		cbVendedora.getSelectionModel().clearSelection();
 		dpNascimento.setValue(null);
 		dpCadastro.setValue(null);
 	}
-
+	
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		configInicial();
-
+		
 	}
-
+	
 	private void configInicial() {
 		try {
 			RegulaCampos.setCampoInteiro(txtCod);
-			RegulaCampos.setCampoCPF(txtCpf);
-			RegulaCampos.setLimitaCaracteres(txtCpf, 14);
+			RegulaCampos.setCampoCPF(txtCPF);
+			RegulaCampos.setLimitaCaracteres(txtCPF, 14);
 			RegulaCampos.setLimitaCaracteres(txtNome, 70);
 			Util.formatDatePicker(dpNascimento, "dd/MM/yyyy");
 			Util.formatDatePicker(dpCadastro, "dd/MM/yyyy");
@@ -151,12 +145,12 @@ public class CadClienteViewController implements Initializable {
 		}
 
 	}
-
+	
 	public void cargaComboBoxVendedora() {
 		if (vds == null) {
 			throw new IllegalStateException("Vendedora não foi Injetada");
 		}
-		List<Vendedora> list = vds.buscaTodos();
+		List<Vendedora> list = vds.buscanome();
 		listVed = FXCollections.observableArrayList(list);
 		cbVendedora.setItems(listVed);
 	}
@@ -166,7 +160,11 @@ public class CadClienteViewController implements Initializable {
 			@Override
 			protected void updateItem(Vendedora item, boolean empyt) {
 				super.updateItem(item, empyt);
-				setText(empyt ? "" : item.getNome());
+				if(item == null || empyt) {
+					setText(null);
+				}else {
+					setText(item.getNome());
+				}
 			}
 		};
 		cbVendedora.setCellFactory(factory);
@@ -174,8 +172,8 @@ public class CadClienteViewController implements Initializable {
 	}
 
 	public void cargaComboBoxStatus() {
-		listStatus = FXCollections.observableArrayList(Arrays.asList(Status.ATIVO));
-		cbStatus.setItems(listStatus);
+		listSt = FXCollections.observableArrayList(Arrays.asList(Status.ATIVO));
+		cbStatus.setItems(listSt);
 	}
 
 	private void carregarComboBoxGenero() {

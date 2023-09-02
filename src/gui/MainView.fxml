@@ -26,6 +26,7 @@
                 <Menu mnemonicParsing="false" text="Controle">
                   <items>
                     <MenuItem fx:id="menuControleVendedora" mnemonicParsing="false" onAction="#onMenuControleVendedoraAction" text="Vendedora" />
+                        <MenuItem fx:id="menuControleCliente" mnemonicParsing="false" onAction="#onMenuControleClienteAction" text="Cliente" />
                   </items>
                 </Menu>
               </menus>

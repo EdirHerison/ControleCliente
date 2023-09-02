@@ -37,4 +37,8 @@ public class VendedoraServico {
 	public List<Vendedora> buscaTodos(){
 		return dao.buscaTudo();
 	}
+	
+	public List<Vendedora> buscanome(){
+		return dao.buscaTudo();
+	}
 }

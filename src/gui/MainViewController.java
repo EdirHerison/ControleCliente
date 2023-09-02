@@ -20,10 +20,6 @@ import model.servico.ClienteServico;
 import model.servico.VendedoraServico;
 
 public class MainViewController implements Initializable{
-
-	//sugestão GPT
-	private VendedoraServico vds;
-	//
 	
 	@FXML
 	private MenuItem menuItemCadVendedor;
@@ -31,6 +27,8 @@ public class MainViewController implements Initializable{
 	private MenuItem menuItemCadCliente;
 	@FXML
 	private MenuItem menuControleVendedora;
+	@FXML
+	private MenuItem menuControleCliente;
 	
 	
 	@FXML
@@ -58,7 +56,14 @@ public class MainViewController implements Initializable{
 		});
 	}
 	
-	
+	@FXML
+	public void onMenuControleClienteAction() {
+		exibeTela("/gui/ControleClienteView.fxml", (ControleClienteViewController consultCliente) -> {
+			consultCliente.setServicos(new ClienteServico(), new VendedoraServico());
+			consultCliente.setCliente(new Cliente());
+			consultCliente.cargaComboBoxVendedora();
+		});
+	}
 	
 	@Override
 	public void initialize(URL url, ResourceBundle rs) {

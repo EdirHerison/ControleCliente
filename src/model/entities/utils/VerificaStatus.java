@@ -17,11 +17,11 @@ public class VerificaStatus {
 		long diffDias = diff / (24 * 60 * 60 * 1000);
 		
 		if(diffDias >= 90) {
-			return stcli.Inativo;
+			return stcli.INATIVO;
 		}else if (diffDias <= 89 && diffDias >= 31) {
-			return stcli.Pre_Inativo;
+			return stcli.PRE_INATIVO;
 		}else {
-			return stcli.Ativo;
+			return stcli.ATIVO;
 		}
 		
 	}

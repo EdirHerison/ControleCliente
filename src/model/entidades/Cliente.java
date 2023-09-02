@@ -122,6 +122,14 @@ public class Cliente implements Serializable{
 	public void setVendedora(Vendedora vendedora) {
 		this.vendedora = vendedora;
 	}
+
+	@Override
+	public String toString() {
+		return  id + cpf + codTotvs + codigo + nome
+				  + genero + nascimento + cadastro + stcli
+				  + vendedora.getNome();
+	}
+	
 	
 	
 

@@ -77,6 +77,6 @@ public class Vendedora implements Serializable {
 
 	@Override
 	public String toString() {
-		return nome ;
+		return this.getNome() ;
 	}
 }

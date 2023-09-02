@@ -147,6 +147,29 @@ public class VendedoraJDBC implements VendedoraDAO {
 			DbConexao.closeResultSet(rs);
 		}
 	}
+	
+	@Override
+	public List<Vendedora> buscaNome() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conexao.prepareStatement("SELECT nome FROM vendedora ORDER BY nome");
+			rs = ps.executeQuery();
+			List<Vendedora> list = new ArrayList<>();
+			while(rs.next()) {
+				Vendedora ved = new Vendedora();
+				ved.setNome(rs.getString("nome"));
+				list.add(ved);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbExecessao(e.getMessage());
+		}
+		finally {
+			DbConexao.closeStatent(ps);
+			DbConexao.closeResultSet(rs);
+		}
+	}
 
 	@Override
 	public void atualizaVendedora(Vendedora ved) {
@@ -182,5 +205,7 @@ public class VendedoraJDBC implements VendedoraDAO {
 		}
 
 	}
+
+	
 
 }
