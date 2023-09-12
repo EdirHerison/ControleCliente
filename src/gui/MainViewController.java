@@ -15,8 +15,10 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.entidades.Cliente;
+import model.entidades.Venda;
 import model.entidades.Vendedora;
 import model.servico.ClienteServico;
+import model.servico.VendaServico;
 import model.servico.VendedoraServico;
 
 public class MainViewController implements Initializable{
@@ -29,6 +31,8 @@ public class MainViewController implements Initializable{
 	private MenuItem menuControleVendedora;
 	@FXML
 	private MenuItem menuControleCliente;
+	@FXML
+	private MenuItem menuNovaVenda;
 	
 	
 	@FXML
@@ -62,6 +66,16 @@ public class MainViewController implements Initializable{
 			consultCliente.setServicos(new ClienteServico(), new VendedoraServico());
 			consultCliente.setCliente(new Cliente());
 			consultCliente.cargaComboBoxVendedora();
+		});
+	}
+	
+	@FXML
+	public void onMenuNovaVendaAction() {
+		exibeTela("/gui/VendaView.fxml", (VendaViewController insereVenda) ->{
+			insereVenda.setVenda(new Venda());
+			insereVenda.setServicos(new VendaServico(), new VendedoraServico(), new ClienteServico());
+			insereVenda.cargaComboBoxVendedora();
+			insereVenda.cargaComboBoxCliente();
 		});
 	}
 	

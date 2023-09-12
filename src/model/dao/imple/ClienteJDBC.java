@@ -223,6 +223,30 @@ public class ClienteJDBC implements ClienteDAO {
 		}
 		
 	}
+	
+	@Override
+	public List<Cliente> buscaTodos() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conexao.prepareStatement("SELECT * FROM cliente INNE ORDER BY nome");
+			rs = ps.executeQuery();
+			List<Cliente> list = new ArrayList<>();
+			while(rs.next()) {
+				Cliente cli = new Cliente();
+				cli.setId(rs.getInt("idcliente"));
+				cli.setNome(rs.getString("nome"));
+				list.add(cli);
+			}
+			return list;	
+		} catch (SQLException e) {
+			throw new DbExecessao(e.getMessage());
+		}
+		finally {
+			DbConexao.closeStatent(ps);
+			DbConexao.closeResultSet(rs);
+		}
+	}
 
 
 	
@@ -251,6 +275,8 @@ public class ClienteJDBC implements ClienteDAO {
 		ved.setNome(rs.getString("nome_vendedora"));
 		return ved;
 	}
+
+	
 
 	
 	

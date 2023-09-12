@@ -3,7 +3,6 @@ package model.entidades;
 import java.io.Serializable;
 import java.util.Date;
 
-import model.entidades.Vendedora;
 import model.entities.enums.FormPag;
 
 public class Venda implements Serializable {

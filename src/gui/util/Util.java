@@ -16,6 +16,14 @@ public class Util {
 		}
 	}
 	
+	public static Double valorDouble (String txt) {
+		try {
+			return Double.parseDouble(txt);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	public static void formatDatePicker (DatePicker dp, String forma) {
 		dp.setConverter(new StringConverter<LocalDate>() {
 			

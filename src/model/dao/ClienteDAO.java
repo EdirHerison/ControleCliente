@@ -13,4 +13,5 @@ public interface ClienteDAO {
 	Cliente buscaClinteCodTotvs (String codTtv);
 	Cliente buscaClienteCodigo (Integer cod);
 	List<Cliente> buscaNomeVendedora (Vendedora ved);
+	List<Cliente> buscaTodos ();
 }

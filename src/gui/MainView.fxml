@@ -29,6 +29,11 @@
                         <MenuItem fx:id="menuControleCliente" mnemonicParsing="false" onAction="#onMenuControleClienteAction" text="Cliente" />
                   </items>
                 </Menu>
+                  <Menu mnemonicParsing="false" text="Nova Venda">
+                    <items>
+                      <MenuItem fx:id="menuNovaVenda" mnemonicParsing="false" onAction="#onMenuNovaVendaAction" text="Inserir" />
+                    </items>
+                  </Menu>
               </menus>
             </MenuBar>
          </children>

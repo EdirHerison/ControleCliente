@@ -1,5 +1,7 @@
 package model.servico;
 
+import java.util.List;
+
 import model.dao.ClienteDAO;
 import model.dao.FabricaDAO;
 import model.entidades.Cliente;
@@ -22,5 +24,8 @@ public class ClienteServico {
 	}
 	public Cliente consultaPorCod (Integer cod) {
 		return dao.buscaClienteCodigo(cod);
+	}
+	public List<Cliente> buscaTodos(){
+		return dao.buscaTodos();
 	}
 }

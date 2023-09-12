@@ -33,7 +33,7 @@ public class ControleClienteViewController implements Initializable {
 	private Cliente cli;
 	private ClienteServico cls;
 	private VendedoraServico vds;
-	private Vendedora ved;
+
 	
 	@FXML
 	private TextField txtId;
@@ -150,7 +150,7 @@ public class ControleClienteViewController implements Initializable {
 		if (vds == null) {
 			throw new IllegalStateException("Vendedora não foi Injetada");
 		}
-		List<Vendedora> list = vds.buscanome();
+		List<Vendedora> list = vds.buscaTodos();
 		listVed = FXCollections.observableArrayList(list);
 		cbVendedora.setItems(listVed);
 	}
